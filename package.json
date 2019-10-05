@@ -39,7 +39,8 @@
     "/bin",
     "/lib",
     "/npm-shrinkwrap.json",
-    "/oclif.manifest.json"
+    "/oclif.manifest.json",
+    "/source"
   ],
   "homepage": "https://github.com/zpbc007/zpnas",
   "keywords": [
