@@ -30,11 +30,11 @@ export default class Source extends Command {
             }]
         }])
         const sourceFile = resolve(__dirname, '../constant/source/', response.sourceFile)
-        const targetSourceFile = '/etc/apt/source.list'
+        const targetSourceFile = '/etc/apt/sources.list'
         let targetSourceFileFd: number
         // 备份源文件
         if (sFlags.backup) {
-            const backupSourceFile = '/etc/apt/source.list.backup'
+            const backupSourceFile = '/etc/apt/sources.list.backup'
             await promisify(fs.copyFile)(targetSourceFile, backupSourceFile)
             this.log(success('backup success'))
         }
