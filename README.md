@@ -19,7 +19,7 @@ $ npm install -g zpnas
 $ zpnas COMMAND
 running command...
 $ zpnas (-v|--version|version)
-zpnas/0.0.2 darwin-x64 node-v12.6.0
+zpnas/0.0.3 darwin-x64 node-v12.6.0
 $ zpnas --help [COMMAND]
 USAGE
   $ zpnas COMMAND
@@ -60,5 +60,5 @@ OPTIONS
   -b, --backup  backup source.list
 ```
 
-_See code: [src/commands/source.ts](https://github.com/zpbc007/zpnas/blob/v0.0.2/src/commands/source.ts)_
+_See code: [src/commands/source.ts](https://github.com/zpbc007/zpnas/blob/v0.0.3/src/commands/source.ts)_
 <!-- commandsstop -->
