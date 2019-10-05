@@ -29,7 +29,7 @@ export default class Source extends Command {
                 name: '19.04.aliyun.source'
             }]
         }])
-        const sourceFile = resolve(__dirname, '../constant/source/', response.sourceFile)
+        const sourceFile = resolve(__dirname, '../../source', response.sourceFile)
         const targetSourceFile = '/etc/apt/sources.list'
         let targetSourceFileFd: number
         // 备份源文件
