@@ -1,3 +1,4 @@
+# 19.04 aliyun source
 deb http://mirrors.aliyun.com/ubuntu/ disco main restricted universe multiverse
 deb http://mirrors.aliyun.com/ubuntu/ disco-security main restricted universe multiverse
 deb http://mirrors.aliyun.com/ubuntu/ disco-updates main restricted universe multiverse
