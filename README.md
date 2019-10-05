@@ -28,28 +28,8 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`zpnas hello [FILE]`](#zpnas-hello-file)
 * [`zpnas help [COMMAND]`](#zpnas-help-command)
-
-## `zpnas hello [FILE]`
-
-describe the command here
-
-```
-USAGE
-  $ zpnas hello [FILE]
-
-OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
-
-EXAMPLE
-  $ zpnas hello
-  hello world from ./src/hello.ts!
-```
-
-_See code: [src/commands/hello.ts](https://github.com/zpbc007/zpnas/blob/v0.0.0/src/commands/hello.ts)_
+* [`zpnas source`](#zpnas-source)
 
 ## `zpnas help [COMMAND]`
 
@@ -67,4 +47,18 @@ OPTIONS
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.2.1/src/commands/help.ts)_
+
+## `zpnas source`
+
+replace aliyun source
+
+```
+USAGE
+  $ zpnas source
+
+OPTIONS
+  -b, --backup  backup source.list
+```
+
+_See code: [src/commands/source.ts](https://github.com/zpbc007/zpnas/blob/v0.0.0/src/commands/source.ts)_
 <!-- commandsstop -->
