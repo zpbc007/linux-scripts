@@ -37,7 +37,7 @@ export default class Source extends Command {
             title: 'update source file',
             task: () => this.createUpdateSourceFileTask(sourceFile)
         }, {
-            title: 'update apt',
+            title: 'update & upgrade apt',
             enabled: () => sFlags.upgrade,
             task: () => this.createUpdateAptTask()
         }])
@@ -98,14 +98,14 @@ export default class Source extends Command {
         return new Listr([{
             title: 'update apt',
             task: () => {
-                const updatePro = execa('sudo apt update')
+                const updatePro = execa('apt update')
                 updatePro.stdout.pipe(process.stdout)
                 return updatePro
             }
         }, {
             title: 'upgrade apt',
             task: () => {
-                const upgradePro = execa('sudo apt upgrade -y')
+                const upgradePro = execa('apt upgrade -y')
                 upgradePro.stdout.pipe(process.stdout)
                 return upgradePro
             }
