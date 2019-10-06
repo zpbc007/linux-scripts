@@ -1,11 +1,10 @@
 import Command, { flags } from '@oclif/command'
-import { exec } from 'child_process'
+import execa from 'execa'
 import * as fs from 'fs'
 import { prompt } from 'inquirer'
+import Listr from 'listr'
 import { resolve } from 'path'
 import { promisify } from 'util'
-
-import { error, success } from '../utils/color'
 
 export default class Source extends Command {
     static description = 'replace aliyun source'
@@ -29,38 +28,33 @@ export default class Source extends Command {
     async run() {
         const { flags: sFlags } = this.parse(Source)
         const sourceFile = await this.getSourceFile()
-        let targetSourceFileFd: number
 
-        // 备份源文件
-        if (sFlags.backup) {
-            await this.backup()
-        }
+        const tasks = new Listr<{sourceFileFd: number}>([{
+            title: 'backup source file',
+            enabled: () => sFlags.backup,
+            task: () => this.backup()
+        }, {
+            title: 'update source file',
+            task: () => this.createUpdateSourceFileTask(sourceFile)
+        }, {
+            title: 'update apt',
+            enabled: () => sFlags.upgrade,
+            task: () => this.createUpdateAptTask()
+        }])
 
-        // 打开目标文件
-        try {
-            targetSourceFileFd = await promisify(fs.open)(Source.targetSourceFile, 'a')
-        } catch {
-            this.error(error(`can not write to file: ${Source.targetSourceFile}`))
-
-            return this.exit()
-        }
-
-        // 读取源文件
-        const sourceData = await promisify(fs.readFile)(sourceFile)
-
-        // 写入
-        try {
-            await promisify(fs.appendFile)(targetSourceFileFd, sourceData)
-            this.log(success('add source success'))
-        } catch (e) {
-            return this.error(e)
-        } finally {
-            await promisify(fs.close)(targetSourceFileFd)
-        }
-
-        if (sFlags.upgrade) {
-            await this.updateApt()
-        }
+        const taskCtx = { sourceFileFd: -1 }
+        tasks
+            .run(taskCtx)
+            .finally(() => {
+                if (taskCtx.sourceFileFd !== -1) {
+                    return promisify(fs.close)(taskCtx.sourceFileFd)
+                }
+            })
+            .catch(err => {
+                if (err) {
+                    this.exit()
+                }
+            })
     }
 
     // 获取源文件地址
@@ -79,19 +73,42 @@ export default class Source extends Command {
     }
 
     // 备份文件
-    private async backup() {
-        await promisify(fs.copyFile)(Source.targetSourceFile, Source.backupSourceFile)
-        this.log(success('backup success'))
+    private backup() {
+        return promisify(fs.copyFile)(Source.targetSourceFile, Source.backupSourceFile)
+    }
+
+    private createUpdateSourceFileTask(sourceFile: string) {
+        return new Listr([{
+            title: 'open source file',
+            task: async ctx => {
+                ctx.sourceFileFd = await promisify(fs.open)(Source.targetSourceFile, 'a')
+            }
+        }, {
+            title: 'write data',
+            task: async ctx => {
+                // 读取源文件
+                const sourceData = await promisify(fs.readFile)(sourceFile)
+                await promisify(fs.appendFile)(ctx.sourceFileFd, sourceData)
+            }
+        }])
     }
 
     // 更新软件
-    private async updateApt() {
-        const proExec = promisify(exec)
-        try {
-            await proExec('sudo apt update')
-            await proExec('sudo apt upgrade -y')
-        } catch (e) {
-            this.error(e)
-        }
+    private async createUpdateAptTask() {
+        return new Listr([{
+            title: 'update apt',
+            task: () => {
+                const updatePro = execa('sudo apt update')
+                updatePro.stdout.pipe(process.stdout)
+                return updatePro
+            }
+        }, {
+            title: 'upgrade apt',
+            task: () => {
+                const upgradePro = execa('sudo apt upgrade -y')
+                upgradePro.stdout.pipe(process.stdout)
+                return upgradePro
+            }
+        }])
     }
 }
