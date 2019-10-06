@@ -6,6 +6,8 @@ import Listr from 'listr'
 import { resolve } from 'path'
 import { promisify } from 'util'
 
+import { fromStream } from '../utils/from-stream'
+
 export default class Source extends Command {
     static description = 'replace aliyun source'
 
@@ -97,16 +99,16 @@ export default class Source extends Command {
     private async createUpdateAptTask() {
         return new Listr([{
             title: 'update apt',
-            task: () => {
+            task: (_, task) => {
                 const updatePro = execa('sudo', ['apt', 'update'])
-                updatePro.stdout.pipe(process.stdout)
+                fromStream<string>(updatePro.stdout).subscribe(data => task.title = data)
                 return updatePro
             }
         }, {
             title: 'upgrade apt',
-            task: () => {
-                const upgradePro = execa('sudo', ['apt', 'upgrade', ' -y'])
-                upgradePro.stdout.pipe(process.stdout)
+            task: (_, task) => {
+                const upgradePro = execa('sudo', ['apt', 'upgrade -y'])
+                fromStream<string>(upgradePro.stdout).subscribe(data => task.title = data)
                 return upgradePro
             }
         }])
