@@ -98,14 +98,14 @@ export default class Source extends Command {
         return new Listr([{
             title: 'update apt',
             task: () => {
-                const updatePro = execa('apt update')
+                const updatePro = execa('sudo', ['apt', 'update'])
                 updatePro.stdout.pipe(process.stdout)
                 return updatePro
             }
         }, {
             title: 'upgrade apt',
             task: () => {
-                const upgradePro = execa('apt upgrade -y')
+                const upgradePro = execa('sudo', ['apt', 'upgrade', ' -y'])
                 upgradePro.stdout.pipe(process.stdout)
                 return upgradePro
             }
