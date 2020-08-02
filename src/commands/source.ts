@@ -8,6 +8,12 @@ import { promisify } from 'util'
 
 import { fromStream } from '../utils/from-stream'
 
+/**
+ * 更新源
+ * TODO:
+ * - 检查文件是否已经包含了源
+ * - 将新的源添加到头部
+ */
 export default class Source extends Command {
     static description = 'replace aliyun source'
 
