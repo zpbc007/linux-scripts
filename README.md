@@ -19,7 +19,7 @@ $ npm install -g zpnas
 $ zpnas COMMAND
 running command...
 $ zpnas (-v|--version|version)
-zpnas/0.0.6 darwin-x64 node-v12.6.0
+zpnas/1.0.0 darwin-x64 node-v11.5.0
 $ zpnas --help [COMMAND]
 USAGE
   $ zpnas COMMAND
@@ -28,8 +28,23 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
+* [`zpnas ddns`](#zpnas-ddns)
 * [`zpnas help [COMMAND]`](#zpnas-help-command)
 * [`zpnas source`](#zpnas-source)
+
+## `zpnas ddns`
+
+update ip on dnspod
+
+```
+USAGE
+  $ zpnas ddns
+
+OPTIONS
+  -c, --config=config  [default: ./config.json] config file dir
+```
+
+_See code: [src/commands/ddns.ts](https://github.com/zpbc007/zpnas/blob/v1.0.0/src/commands/ddns.ts)_
 
 ## `zpnas help [COMMAND]`
 
@@ -46,7 +61,7 @@ OPTIONS
   --all  see all commands in CLI
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.2.1/src/commands/help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.2.3/src/commands/help.ts)_
 
 ## `zpnas source`
 
@@ -61,5 +76,5 @@ OPTIONS
   -u, --upgrade  update and upgrade apt software
 ```
 
-_See code: [src/commands/source.ts](https://github.com/zpbc007/zpnas/blob/v0.0.6/src/commands/source.ts)_
+_See code: [src/commands/source.ts](https://github.com/zpbc007/zpnas/blob/v1.0.0/src/commands/source.ts)_
 <!-- commandsstop -->

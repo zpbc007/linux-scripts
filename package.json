@@ -1,7 +1,7 @@
 {
   "name": "zpnas",
   "description": "easy to build nas system",
-  "version": "0.0.6",
+  "version": "1.0.0",
   "author": "赵鹏 @zpbc007",
   "bin": {
     "zpnas": "./bin/run"
@@ -11,12 +11,14 @@
     "@oclif/command": "^1",
     "@oclif/config": "^1",
     "@oclif/plugin-help": "^2",
+    "axios": "^0.19.2",
     "chalk": "^2.4.2",
     "execa": "^2.0.5",
     "inquirer": "^7.0.0",
     "listr": "^0.14.3",
+    "query-string": "^6.13.1",
     "rxjs": "^6.5.3",
-    "tslib": "^1"
+    "tslib": "^1.13.0"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1",
@@ -27,7 +29,7 @@
     "@types/inquirer": "^6.5.0",
     "@types/listr": "^0.14.2",
     "@types/mocha": "^5",
-    "@types/node": "^10",
+    "@types/node": "^10.17.28",
     "chai": "^4",
     "globby": "^10",
     "mocha": "^5",
